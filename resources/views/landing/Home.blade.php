@@ -63,7 +63,7 @@
                     <a class="nav-link mx-lg-2" href="5-Contact.html">Contact</a>
                   </li>
                   <div class="col-md-3 text-end">
-                  <a href="{{ url('/landing/login') }}" type="button" class="btn btn-outline-success me-2">Login</a>
+                  <a href="{{ url('/login') }}" type="button" class="btn btn-outline-success me-2">Login</a>
                   <a href="7.Registration.html" type="button" class="btn btn-primary">Sign-up</a>
                 </div>            
             </div>
@@ -414,5 +414,7 @@
 
     <!--Bootstrap js-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
+   
+@include('sweetalert::alert')
+  </body>
 </html>

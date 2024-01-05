@@ -8,7 +8,7 @@ class LandingController extends Controller
 {
     public function login()
     {
-      return view('landing.login');
+      return view('auth.login');
     }
 
 
