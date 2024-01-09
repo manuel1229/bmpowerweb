@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+Use App\Models\User;
+
+use Session;
 use Auth;
 
 class LoginController extends Controller
@@ -20,7 +23,7 @@ class LoginController extends Controller
       return view('auth.registration');
     }
 
-    public function check(Request $request){
+    protected function check(Request $request){
 
 
         $credentials = $request->validate([
@@ -33,13 +36,17 @@ class LoginController extends Controller
         {
             $user_role = Auth::user()->user_type;
             if($user_role == "User"){
-            return view('user.usermenu');
-        }else{
-            return "<h2>Invalid User Type</h2>";
+                $user = User::where('email' , '=' , $request->email) ->first();
 
-        }
-        }
+                $request->session()->put('current_user_id', $user->id);
+
+                return redirect(route('merchandiser.viewmerchandisermenu'));
+            }else{
+            return "<h2>Invalid User Type</h2>";
+            }
+        }else{
         return "<h2>Invalid Email or Password</h2>";
+        }
     }
 
     function logout(){

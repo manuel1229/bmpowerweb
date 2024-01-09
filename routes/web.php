@@ -1,10 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use RealRashid\SweetAlert\Facades\Alert;
+
 use App\Http\Controllers\LandingController;
+
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegistrationController;
-use RealRashid\SweetAlert\Facades\Alert;
+
+use App\Http\Controllers\User\UserMenuController;
+use App\Http\Controllers\Merchandiser\MerchandiserMenuController;
+use App\Http\Controllers\SuperAdmin\SuperAdminController;
+
+
+use App\Http\Middleware\Merchandiser;
+use App\Http\Middleware\SuperAdmin;
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,10 +30,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 |
 */
 
-Route::get('/', function () {
+// Route::get('/', function () {
    
-    return view('landing.Home');
-});
+//     return view('landing.Home');
+// });
+
+Route::get('/', LandingController::class . '@home')->name('home');
 
 Route::get('/login', LandingController::class . '@login')->name('auth.login');
 
@@ -32,3 +48,18 @@ Route::get('/registration', LoginController::class . '@registration')->name('aut
 Route::get('/logout' , [LandingController::class, 'logout'])->name('logout');
 
 Route::post('/registration', [RegistrationController::class, 'registerUser'])->name('auth.register');
+
+
+// Route::get('superadmin', function(){
+//     return view('superadmin');
+// })->name('superadmin')->middleware('superadmin');
+
+
+Route::middleware([Merchandiser::class])->group(function(){
+    Route::get('/merchandisermenu', [MerchandiserMenuController::class, 'viewmerchandisermenu'])->name('merchandiser.viewmerchandisermenu');
+});
+
+
+Route::middleware([SuperAdmin::class])->group(function(){
+    Route::get('/superadmin', [MerchandiserMenuController::class, 'superadmin'])->name('superadmin.superadmin');
+});
